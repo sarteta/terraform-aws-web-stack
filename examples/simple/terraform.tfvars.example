@@ -1,0 +1,10 @@
+aws_region      = "us-east-1"
+name            = "demo-stack"
+domain_name     = "app.example.com"
+route53_zone_id = "Z0000000000000000000"
+container_image = "public.ecr.aws/nginx/nginx:1.25"
+
+# Keep the real password out of the repo. Use env:
+#   export TF_VAR_db_password='changeme-32-chars'
+# or AWS Secrets Manager reference.
+db_password = "change-me-very-secret"
