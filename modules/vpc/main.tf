@@ -2,9 +2,9 @@ locals {
   azs = slice(data.aws_availability_zones.available.names, 0, var.az_count)
 
   # /20 chunks → plenty of room (~4k IPs) per subnet
-  public_subnets      = [for i, _ in local.azs : cidrsubnet(var.cidr_block, 4, i)]
-  private_subnets     = [for i, _ in local.azs : cidrsubnet(var.cidr_block, 4, i + 4)]
-  db_private_subnets  = [for i, _ in local.azs : cidrsubnet(var.cidr_block, 4, i + 8)]
+  public_subnets     = [for i, _ in local.azs : cidrsubnet(var.cidr_block, 4, i)]
+  private_subnets    = [for i, _ in local.azs : cidrsubnet(var.cidr_block, 4, i + 4)]
+  db_private_subnets = [for i, _ in local.azs : cidrsubnet(var.cidr_block, 4, i + 8)]
 
   nat_count = var.nat_mode == "per_az" ? length(local.azs) : 1
 
@@ -92,7 +92,7 @@ resource "aws_subnet" "private" {
 resource "aws_route_table" "private" {
   count  = length(local.azs)
   vpc_id = aws_vpc.this.id
-  tags   = merge(local.common_tags, {
+  tags = merge(local.common_tags, {
     "Name" = "${var.name}-private-rt-${local.azs[count.index]}"
   })
 }
@@ -150,9 +150,9 @@ resource "aws_iam_role" "flow_logs" {
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [{
-      Effect = "Allow"
+      Effect    = "Allow"
       Principal = { Service = "vpc-flow-logs.amazonaws.com" }
-      Action = "sts:AssumeRole"
+      Action    = "sts:AssumeRole"
     }]
   })
 }
@@ -181,6 +181,6 @@ resource "aws_flow_log" "this" {
   iam_role_arn         = aws_iam_role.flow_logs[0].arn
   log_destination_type = "cloud-watch-logs"
   log_destination      = aws_cloudwatch_log_group.flow[0].arn
-  traffic_type         = "REJECT"  # save money; only care about rejects for debugging
+  traffic_type         = "REJECT" # save money; only care about rejects for debugging
   vpc_id               = aws_vpc.this.id
 }

@@ -38,8 +38,8 @@ module "alb" {
   vpc_id            = module.vpc.vpc_id
   public_subnet_ids = module.vpc.public_subnet_ids
 
-  domain_name           = var.domain_name
-  route53_zone_id       = var.route53_zone_id
+  domain_name            = var.domain_name
+  route53_zone_id        = var.route53_zone_id
   create_acm_certificate = true
   create_dns_alias       = true
 
@@ -57,11 +57,11 @@ module "rds" {
   db_name         = "appdb"
   master_password = var.db_password
 
-  instance_class        = "db.t3.medium"
-  allocated_storage_gb  = 50
-  multi_az              = false
-  deletion_protection   = false
-  take_final_snapshot   = false
+  instance_class       = "db.t3.medium"
+  allocated_storage_gb = 50
+  multi_az             = false
+  deletion_protection  = false
+  take_final_snapshot  = false
 
   tags = local.common_tags
 }

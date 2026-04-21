@@ -55,22 +55,22 @@ module "alb" {
 module "rds" {
   source = "../../modules/rds"
 
-  name                  = var.name
-  vpc_id                = module.vpc.vpc_id
-  db_subnet_ids         = module.vpc.db_private_subnet_ids
-  allowed_client_sg_id  = module.app.security_group_id
+  name                 = var.name
+  vpc_id               = module.vpc.vpc_id
+  db_subnet_ids        = module.vpc.db_private_subnet_ids
+  allowed_client_sg_id = module.app.security_group_id
 
-  db_name               = "appdb"
-  master_password       = var.db_password
+  db_name         = "appdb"
+  master_password = var.db_password
 
-  instance_class        = "db.m5.large"
-  allocated_storage_gb  = 200
-  max_allocated_storage_gb = 1000
-  multi_az              = true
-  backup_retention_days = 14
-  deletion_protection   = true
-  take_final_snapshot   = true
-  performance_insights  = true
+  instance_class               = "db.m5.large"
+  allocated_storage_gb         = 200
+  max_allocated_storage_gb     = 1000
+  multi_az                     = true
+  backup_retention_days        = 14
+  deletion_protection          = true
+  take_final_snapshot          = true
+  performance_insights         = true
   enhanced_monitoring_interval = 60
 
   tags = local.common_tags
@@ -93,9 +93,9 @@ module "app" {
   task_cpu        = 1024
   task_memory     = 2048
 
-  desired_count = 4
-  min_count     = 4
-  max_count     = 20
+  desired_count  = 4
+  min_count      = 4
+  max_count      = 20
   target_cpu_pct = 55
 
   container_insights = true

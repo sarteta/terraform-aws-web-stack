@@ -65,14 +65,14 @@ resource "aws_db_parameter_group" "this" {
 resource "aws_db_instance" "this" {
   identifier = var.name
 
-  engine               = "postgres"
-  engine_version       = var.engine_version
-  instance_class       = var.instance_class
-  allocated_storage    = var.allocated_storage_gb
+  engine                = "postgres"
+  engine_version        = var.engine_version
+  instance_class        = var.instance_class
+  allocated_storage     = var.allocated_storage_gb
   max_allocated_storage = var.max_allocated_storage_gb
-  storage_type         = "gp3"
-  storage_encrypted    = true
-  kms_key_id           = local.kms_key_arn
+  storage_type          = "gp3"
+  storage_encrypted     = true
+  kms_key_id            = local.kms_key_arn
 
   db_name  = var.db_name
   username = var.master_username
@@ -83,18 +83,18 @@ resource "aws_db_instance" "this" {
   parameter_group_name   = aws_db_parameter_group.this.name
   publicly_accessible    = false
 
-  multi_az                    = var.multi_az
-  backup_retention_period     = var.backup_retention_days
-  backup_window               = "03:00-04:00"
+  multi_az                     = var.multi_az
+  backup_retention_period      = var.backup_retention_days
+  backup_window                = "03:00-04:00"
   maintenance_window           = "Mon:04:00-Mon:05:00"
-  auto_minor_version_upgrade  = true
-  deletion_protection         = var.deletion_protection
-  delete_automated_backups    = false
-  copy_tags_to_snapshot       = true
-  skip_final_snapshot         = !var.take_final_snapshot
-  final_snapshot_identifier   = var.take_final_snapshot ? "${var.name}-final-${formatdate("YYYYMMDDhhmmss", timestamp())}" : null
+  auto_minor_version_upgrade   = true
+  deletion_protection          = var.deletion_protection
+  delete_automated_backups     = false
+  copy_tags_to_snapshot        = true
+  skip_final_snapshot          = !var.take_final_snapshot
+  final_snapshot_identifier    = var.take_final_snapshot ? "${var.name}-final-${formatdate("YYYYMMDDhhmmss", timestamp())}" : null
   performance_insights_enabled = var.performance_insights
-  monitoring_interval         = var.enhanced_monitoring_interval
+  monitoring_interval          = var.enhanced_monitoring_interval
 
   tags = local.common_tags
 
