@@ -59,7 +59,7 @@ variable "environment" {
   default = {}
 }
 variable "secrets" {
-  description = "map of env var name → ARN (SSM parameter or Secrets Manager secret)"
+  description = "map of env var name to ARN (SSM parameter or Secrets Manager secret)"
   type        = map(string)
   default     = {}
 }

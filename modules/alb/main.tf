@@ -33,7 +33,7 @@ resource "aws_security_group_rule" "alb_ingress_http" {
   protocol          = "tcp"
   cidr_blocks       = ["0.0.0.0/0"]
   security_group_id = aws_security_group.alb.id
-  description       = "HTTP for 301 → HTTPS redirect only"
+  description       = "HTTP (301 redirect to HTTPS)"
 }
 
 resource "aws_security_group_rule" "alb_egress_all" {

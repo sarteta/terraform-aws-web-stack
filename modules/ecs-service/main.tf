@@ -73,7 +73,7 @@ resource "aws_security_group_rule" "svc_ingress_alb" {
   protocol                 = "tcp"
   source_security_group_id = var.alb_security_group_id
   security_group_id        = aws_security_group.service.id
-  description              = "ALB → service"
+  description              = "from ALB to service"
 }
 
 resource "aws_security_group_rule" "svc_egress_all" {
@@ -201,7 +201,7 @@ resource "aws_ecs_service" "this" {
     ignore_changes = [desired_count] # autoscaler owns this once running
   }
 
-  tags = local.common_tags
+  tags       = local.common_tags
   depends_on = [aws_lb_listener_rule.this]
 }
 
