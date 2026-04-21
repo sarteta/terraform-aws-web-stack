@@ -1,8 +1,9 @@
 # terraform-aws-web-stack
 
-Opinionated Terraform modules for a **3-tier containerised web stack on AWS**
-— the same shape I've built and maintained for small-to-medium production
-workloads as a DevOps team lead.
+Terraform modules for a 3-tier containerized web stack on AWS. This is the
+shape I've been running at Socialnet for several small/medium production
+services (as DevOps team lead). Pulled out here so the next account I
+bootstrap doesn't start from a blank `main.tf`.
 
 ```
                                 Internet
@@ -66,12 +67,11 @@ to each other. Use `examples/production` for Multi-AZ NATs + Multi-AZ RDS.
 
 ### 1-NAT vs NAT-per-AZ (`nat_mode`)
 
-The VPC module accepts `nat_mode = "single" | "per_az"`. I learned the
-hard way (running an AWS account from 2023-2026) that the "NAT per AZ
-for HA" advice is way too often applied to dev/staging VPCs where a
-20-minute rebuild is fine. Each unnecessary NAT is ~$32/mo + data.
-
-**Rule I use:** `per_az` for prod, `single` for everything else.
+The VPC module takes `nat_mode = "single" | "per_az"`. The "one NAT per AZ
+for HA" advice is correct for prod, but gets copy-pasted onto dev and
+staging VPCs where a 20-minute rebuild is fine. Each extra NAT is ~$32/mo
+plus data. In practice I use `per_az` for prod and `single` for
+everything else.
 
 ### Private subnets for RDS are separate from app private
 
@@ -104,14 +104,15 @@ tfsec .
 
 See `.github/workflows/validate.yml` for CI.
 
-## Not included
+## Scope
 
-This module deliberately does **not** include:
+Things this repo does not include, on purpose:
 
-- A CI/CD pipeline (use GitHub Actions / CodePipeline; out of scope)
-- Application code (this is infrastructure, your app is yours)
-- Logging/monitoring stack (CloudWatch is wired in; Datadog/Grafana bolt-on is a PR away)
-- Cost dashboard (see [`aws-cost-optimizer-cli`](https://github.com/sarteta/aws-cost-optimizer-cli))
+- App code — this is infra, your app is yours.
+- CI/CD pipeline — use GitHub Actions, CodePipeline, Atlantis, whatever fits.
+- Full observability — CloudWatch is wired in; Datadog/Grafana is a bolt-on.
+- Cost dashboards — I have [`aws-cost-optimizer-cli`](https://github.com/sarteta/aws-cost-optimizer-cli)
+  for that side of things.
 
 ## Versioning
 
