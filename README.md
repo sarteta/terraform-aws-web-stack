@@ -5,36 +5,15 @@ shape I've been running at Socialnet for several small/medium production
 services (as DevOps team lead). Pulled out here so the next account I
 bootstrap doesn't start from a blank `main.tf`.
 
+```mermaid
+flowchart TD
+    users([Internet]) --> r53[Route53 + ACM]
+    r53 --> alb[ALB :443<br/>public subnets]
+    alb --> svc[ECS Fargate<br/>private subnets<br/>autoscaling 2..10]
+    svc --> rds[(RDS Postgres<br/>Multi-AZ<br/>db-private subnets)]
 ```
-                                Internet
-                                   │
-                          ┌────────▼────────┐
-                          │  ACM cert + R53  │
-                          │  alias  ➜  ALB   │
-                          └────────┬────────┘
-                                   │  :443
-                   ┌───────────────▼───────────────┐
-                   │  Application Load Balancer    │
-                   │  (public subnets, HTTPS only) │
-                   └───────┬───────────────────────┘
-                           │
-                  target   │   target
-                   group   │    group
-                    (app)  │   (admin)
-                           ▼
-            ┌──────────────────────────────┐
-            │  ECS Fargate service(s)      │   autoscaling 2→10
-            │  (private subnets)           │   rolling deploy
-            │  - app container             │
-            │  - sidecar: log-forwarder    │
-            └───────────┬──────────────────┘
-                        │
-                        ▼
-            ┌──────────────────────────────┐
-            │  RDS Postgres (Multi-AZ)     │
-            │  (db-private subnets)        │
-            └──────────────────────────────┘
-```
+
+Documentación en español: [README.es.md](./README.es.md)
 
 ## Modules
 
