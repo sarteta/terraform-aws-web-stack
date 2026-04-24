@@ -4,7 +4,9 @@
 [![terraform](https://img.shields.io/badge/terraform-1.7%2B-blueviolet)](https://www.terraform.io)
 [![license](https://img.shields.io/badge/license-MIT-green)](./LICENSE)
 
-Terraform modules for a 3-tier containerized web stack on AWS. This is the
+Terraform modules for a 3-tier containerized web stack on AWS.
+
+![demo](./examples/demo.png) This is the
 shape I've been running at Socialnet for several small/medium production
 services (as DevOps team lead). Pulled out here so the next account I
 bootstrap doesn't start from a blank `main.tf`.
