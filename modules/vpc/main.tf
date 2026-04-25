@@ -112,7 +112,7 @@ resource "aws_route_table_association" "private" {
   route_table_id = aws_route_table.private[count.index].id
 }
 
-# ---- db-private subnets (no default route — RDS only needs VPC-local) ----
+# ---- db-private subnets (no default route -- RDS only needs VPC-local) ----
 resource "aws_subnet" "db_private" {
   count             = length(local.azs)
   vpc_id            = aws_vpc.this.id

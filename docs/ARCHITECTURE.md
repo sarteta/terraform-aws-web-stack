@@ -20,7 +20,7 @@ swaps painful.
 ## Why `nat_mode` is a knob, not a decision
 
 Many Terraform modules hardcode `one NAT per AZ`. That's correct for
-prod — a NAT AZ outage takes down the apps in that AZ. But for dev
+prod -- a NAT AZ outage takes down the apps in that AZ. But for dev
 and staging, paying ~$100/mo for 3 NATs to protect a workload that
 doesn't even have an SLA is waste. The module exposes this as a knob
 so you can have:
@@ -35,7 +35,7 @@ Same code path, different cost profile.
 ## Why DB and app subnets are separate
 
 An app subnet has a default route to NAT. A DB subnet has NO default
-route — RDS never needs to reach the internet during runtime. Separating
+route -- RDS never needs to reach the internet during runtime. Separating
 them means a misconfigured RT or SG can't accidentally expose the DB.
 
 ## ECS service ignores `desired_count`
@@ -57,7 +57,7 @@ In a multi-service setup the same ALB hosts N services, each with its
 own host-header or path rule. Putting the rule inside each service
 module means:
 
-- Each service PR is self-contained — VPC + ALB are unchanged
+- Each service PR is self-contained -- VPC + ALB are unchanged
 - Deleting a service cleanly removes its rule
 - You can't accidentally leave an orphan rule pointing at a deleted TG
 
@@ -76,7 +76,7 @@ See `examples/production/main.tf` for the shape we deploy:
 ## Known limitations
 
 - No WAF module yet (on roadmap)
-- No Aurora module — we use plain Postgres RDS
-- No EventBridge / SQS / SNS modules — integration infra is per-product
+- No Aurora module -- we use plain Postgres RDS
+- No EventBridge / SQS / SNS modules -- integration infra is per-product
 - No CI/CD: use GitHub Actions, CodePipeline, or Atlantis
 - Fargate only; no EC2 launch type

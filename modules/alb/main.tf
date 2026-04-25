@@ -60,7 +60,7 @@ resource "aws_lb" "this" {
   tags = local.common_tags
 }
 
-# ACM cert — optionally managed here via DNS validation against route53_zone_id
+# ACM cert -- optionally managed here via DNS validation against route53_zone_id
 resource "aws_acm_certificate" "this" {
   count             = var.create_acm_certificate ? 1 : 0
   domain_name       = var.domain_name

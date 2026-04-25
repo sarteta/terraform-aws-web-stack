@@ -4,12 +4,9 @@
 [![terraform](https://img.shields.io/badge/terraform-1.7%2B-blueviolet)](https://www.terraform.io)
 [![license](https://img.shields.io/badge/license-MIT-green)](./LICENSE)
 
-Terraform modules for a 3-tier containerized web stack on AWS.
+Terraform modules for a 3-tier containerized web stack on AWS: VPC with proper subnet separation, ALB with ACM, ECS Fargate, RDS Postgres Multi-AZ. Reusable starting point so a new account does not bootstrap from a blank `main.tf`.
 
-![demo](./examples/demo.png) This is the
-shape I've been running at Socialnet for several small/medium production
-services (as DevOps team lead). Pulled out here so the next account I
-bootstrap doesn't start from a blank `main.tf`.
+![demo](./examples/demo.png)
 
 ```mermaid
 flowchart TD
@@ -33,7 +30,7 @@ Documentación en español: [README.es.md](./README.es.md)
 Each module is small and composable. `examples/simple` and
 `examples/production` show how they plug together.
 
-## Quickstart — `examples/simple`
+## Quickstart -- `examples/simple`
 
 ```bash
 cd examples/simple
@@ -45,18 +42,14 @@ terraform apply
 ```
 
 The `simple` example spins up a **single-AZ NAT dev stack** (~$50/mo at
-list price including NAT) — the minimum shape to see the modules talking
+list price including NAT) -- the minimum shape to see the modules talking
 to each other. Use `examples/production` for Multi-AZ NATs + Multi-AZ RDS.
 
 ## Design choices
 
 ### 1-NAT vs NAT-per-AZ (`nat_mode`)
 
-The VPC module takes `nat_mode = "single" | "per_az"`. The "one NAT per AZ
-for HA" advice is correct for prod, but gets copy-pasted onto dev and
-staging VPCs where a 20-minute rebuild is fine. Each extra NAT is ~$32/mo
-plus data. In practice I use `per_az` for prod and `single` for
-everything else.
+The VPC module takes `nat_mode = "single" | "per_az"`. NAT-per-AZ is correct for prod. Dev and staging usually run fine on a single NAT and save ~$32/mo per AZ skipped, plus the data charges.
 
 ### Private subnets for RDS are separate from app private
 
@@ -93,10 +86,10 @@ See `.github/workflows/validate.yml` for CI.
 
 Things this repo does not include, on purpose:
 
-- App code — this is infra, your app is yours.
-- CI/CD pipeline — use GitHub Actions, CodePipeline, Atlantis, whatever fits.
-- Full observability — CloudWatch is wired in; Datadog/Grafana is a bolt-on.
-- Cost dashboards — I have [`aws-cost-optimizer-cli`](https://github.com/sarteta/aws-cost-optimizer-cli)
+- App code -- this is infra, your app is yours.
+- CI/CD pipeline -- use GitHub Actions, CodePipeline, Atlantis, whatever fits.
+- Full observability -- CloudWatch is wired in; Datadog/Grafana is a bolt-on.
+- Cost dashboards -- I have [`aws-cost-optimizer-cli`](https://github.com/sarteta/aws-cost-optimizer-cli)
   for that side of things.
 
 ## Versioning

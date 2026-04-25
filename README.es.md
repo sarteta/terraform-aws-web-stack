@@ -17,7 +17,7 @@ la próxima cuenta que arranque no empiece desde un `main.tf` en blanco.
 Cada módulo es chico y componible. `examples/simple` y `examples/production`
 muestran cómo encajan.
 
-## Quickstart — `examples/simple`
+## Quickstart -- `examples/simple`
 
 ```bash
 cd examples/simple
@@ -64,10 +64,10 @@ Funciona en `sa-east-1`, `eu-central-1`, etc.
 
 Cosas que este repo no incluye, a propósito:
 
-- Código de aplicación — esto es infra, tu app es tuya.
-- Pipeline de CI/CD — usá GitHub Actions, CodePipeline, Atlantis, lo que entre.
-- Observabilidad completa — CloudWatch queda cableado; Datadog/Grafana es un bolt-on.
-- Dashboards de costo — para eso tengo [`aws-cost-optimizer-cli`](https://github.com/sarteta/aws-cost-optimizer-cli).
+- Código de aplicación -- esto es infra, tu app es tuya.
+- Pipeline de CI/CD -- usá GitHub Actions, CodePipeline, Atlantis, lo que entre.
+- Observabilidad completa -- CloudWatch queda cableado; Datadog/Grafana es un bolt-on.
+- Dashboards de costo -- para eso tengo [`aws-cost-optimizer-cli`](https://github.com/sarteta/aws-cost-optimizer-cli).
 
 ## Versionado
 

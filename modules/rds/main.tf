@@ -14,7 +14,7 @@ resource "aws_db_subnet_group" "this" {
 
 resource "aws_security_group" "rds" {
   name        = "${var.name}-rds"
-  description = "RDS — only ECS service can reach it"
+  description = "RDS -- only ECS service can reach it"
   vpc_id      = var.vpc_id
   tags        = merge(local.common_tags, { "Name" = "${var.name}-rds" })
 }
